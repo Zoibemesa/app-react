@@ -70,7 +70,7 @@ function Layout() {
         }
       `}</style>
 
-      {/* Capa base animada */}
+      
       <div style={{
         position: "fixed", inset: 0, zIndex: 0,
         background: "linear-gradient(135deg, #3b1f0a, #6b3a1f, #a0622a, #c97c3a, #e8b87a, #8b5e3c, #3b1f0a)",
@@ -78,7 +78,7 @@ function Layout() {
         animation: "gradientMove 12s ease infinite"
       }} />
 
-      {/* Orbes flotantes */}
+      
       <div style={{
         position: "fixed", top: "-100px", left: "-100px",
         width: "500px", height: "500px", borderRadius: "50%",
@@ -148,7 +148,7 @@ function Layout() {
             margin: 0,
             letterSpacing: "-0.3px"
           }}>
-            Mi Aplicación React
+            Aplicacion Tarea #3
           </h1>
 
           <nav style={{ display: "flex", flexWrap: "wrap", gap: "8px" }}>
