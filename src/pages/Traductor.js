@@ -2,15 +2,46 @@ import { useState } from "react";
 function Traductor() {
   const [numero, setNumero] = useState("");
   const [resultado, setResultado] = useState("");
+
   const convertir = () => {
     const n = parseInt(numero);
-    const unidades = ["", "uno", "dos", "tres", "cuatro", "cinco", "seis", "siete", "ocho", "nueve"];
-    if (n >= 1 && n <= 9) {
-      setResultado(unidades[n]);
-    } else {
-      setResultado("Número fuera del rango básico");
+
+    const unidades = ["", "uno", "dos", "tres", "cuatro", "cinco", "seis", "siete", "ocho", "nueve",
+      "diez", "once", "doce", "trece", "catorce", "quince", "dieciséis", "diecisiete", "dieciocho", "diecinueve"];
+
+    const decenas = ["", "", "veinte", "treinta", "cuarenta", "cincuenta", "sesenta", "setenta", "ochenta", "noventa"];
+
+    const centenas = ["", "cien", "doscientos", "trescientos", "cuatrocientos", "quinientos",
+      "seiscientos", "setecientos", "ochocientos", "novecientos"];
+
+    const convertirMenorMil = (num) => {
+      if (num === 0) return "";
+      if (num < 20) return unidades[num];
+      if (num < 100) {
+        if (num % 10 === 0) return decenas[Math.floor(num / 10)];
+        if (num >= 20 && num < 30) return "veinti" + unidades[num % 10];
+        return decenas[Math.floor(num / 10)] + " y " + unidades[num % 10];
+      }
+      if (num === 100) return "cien";
+      if (num < 200) return "ciento " + convertirMenorMil(num % 100);
+      const c = Math.floor(num / 100);
+      const resto = num % 100;
+      return centenas[c] + (resto > 0 ? " " + convertirMenorMil(resto) : "");
+    };
+
+    if (isNaN(n) || n < 1 || n > 1000) {
+      setResultado("Número fuera del rango (1 - 1000)");
+      return;
     }
+
+    if (n === 1000) {
+      setResultado("mil");
+      return;
+    }
+
+    setResultado(convertirMenorMil(n));
   };
+
   return (
     <div style={{
       background: "linear-gradient(160deg, #fdf6f0 0%, #f5e6d3 50%, #ede0d0 100%)",
@@ -31,7 +62,7 @@ function Traductor() {
 
       <input
         type="number"
-        placeholder="Ingresa un número (1-9)"
+        placeholder="Ingresa un número (1 - 1000)"
         onChange={(e) => setNumero(e.target.value)}
         style={{
           width: "100%",
